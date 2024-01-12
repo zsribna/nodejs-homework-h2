@@ -1,8 +1,7 @@
- 
-export const handleSaveError = (error, data, next) => {
+export const handleSaveError = (error, data, next)=> {
     error.status = 400;
-    next()
-};
+    next();
+}
 
 export const addUpdateSettings = function(next){
     this.options.new = true;
