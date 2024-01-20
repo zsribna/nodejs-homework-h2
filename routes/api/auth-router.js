@@ -1,7 +1,15 @@
 import express from "express";
 import { validateBody, isEmptyBody } from "../../decorators/index.js";
-import { authenticate } from "../../middlewares/index.js";
-import { userSignupSchema, userSigninSchema, subsUpdateSchema } from "../../models/User.js";
+import {
+  authenticate,
+  isFileUploaded,
+  upload,
+} from "../../middlewares/index.js";
+import {
+  userSignupSchema,
+  userSigninSchema,
+  subsUpdateSchema,
+} from "../../models/User.js";
 import authController from "../../controllers/auth-controller.js";
 
 const authRouter = express.Router();
@@ -26,6 +34,13 @@ authRouter.patch(
   isEmptyBody("body must have fields"),
   validateBody(subsUpdateSchema),
   authController.updateSubscription
+);
+authRouter.patch(
+  "/avatars",
+  authenticate,
+  upload.single("avatar"),
+  isFileUploaded,
+  authController.updateAvatar
 );
 
 export default authRouter;
