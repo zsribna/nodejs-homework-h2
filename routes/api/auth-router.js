@@ -9,6 +9,7 @@ import {
   userSignupSchema,
   userSigninSchema,
   subsUpdateSchema,
+  userEmailSchema,
 } from "../../models/User.js";
 import authController from "../../controllers/auth-controller.js";
 
@@ -19,6 +20,13 @@ authRouter.post(
   isEmptyBody("body must have fields"),
   validateBody(userSignupSchema),
   authController.signup
+);
+authRouter.get("/verify/:verificationToken", authController.verify);
+authRouter.post(
+  "/verify",
+  isEmptyBody("body must have fields"),
+  validateBody(userEmailSchema),
+  authController.resendVerifyEmail
 );
 authRouter.post(
   "/login",

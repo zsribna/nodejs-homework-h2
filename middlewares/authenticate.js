@@ -19,7 +19,8 @@ const authenticate = async (req, res, next) => {
     if (!user || !user.token || token !== user.token) {
       return next(HttpError(401));
     }
-
+    //додаємо об'єкт user в об'єкт запиту req, який далі предається усім наступним midlewar-ам
+    //та в кінці опиниться у контроллері addContact, там візьметься значення ключа id user-a та додасться ключ owner, в який запишемо цей id
     req.user = user;
     next();
   } catch (error) {
